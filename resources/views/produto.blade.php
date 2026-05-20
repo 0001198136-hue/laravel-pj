@@ -2,12 +2,13 @@
 @section('conteudo')
   <main class="page-hero">
     <div class="container page-panel product-grid">
-      <div class="card"><img src="/assets/img/product1.svg" alt="Tenis Urban"></div>
+      <div class="card"><img src="/assets/img/{{ $produto['imagem'] }}" alt="{{ $produto['nome'] }}"></div>
       <div>
+      
         <span class="tag">Moda urbana</span>
-        <h1>Tenis Urban Edition</h1>
+        <h1>{{ $produto['nome'] }}</h1>
         <p>Modelo versatil com pegada premium, visual limpo e proposta ideal para vitrine principal de um ecommerce de moda.</p>
-        <div class="price" data-price="289.9" data-unit-price="289.9"></div>
+        <div class="price" data-price="{{ $produto['preco'] }}" data-unit-price="{{ $produto['preco'] }}"></div>
         <p class="small">Parcelamento em ate 12x sem juros. Frete gratis para capitais.</p>
 
         <div class="list">

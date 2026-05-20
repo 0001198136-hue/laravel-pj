@@ -2,53 +2,31 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('home');
-});
+Route::get('/', 'App\Http\Controllers\WebSiteController@home');
 
+Route::get('/catalogo', 'App\Http\Controllers\WebSiteController@catalogo');
 
-Route::get('/catalogo', function () {
-    return view('catalogo');
-});
+Route::get('/produto', 'App\Http\Controllers\WebSiteController@produto');
 
-Route::get('/produto', function () {
-    return view('produto');
-});
+Route::get('/carrinho', 'App\Http\Controllers\WebSiteController@carrinho');
 
-Route::get('/carrinho', function () {
-    return view('carrinho');
-});
+Route::get('/checkout', 'App\Http\Controllers\WebSiteController@checkout');
 
-Route::get('/checkout', function () {
-    return view('checkout');
-});
-
-Route::get('/contato', function () {
-    return view('contato');
-});
+Route::get('/contato', 'App\Http\Controllers\WebSiteController@contato');
 
 Route::prefix('admin')->group(function () {
-    Route::get('/', function () {
-        return view('admin.home');
-    });
+    
+    Route::get('/login', 'App\Http\Controllers\WebSiteController@login');
 
-    Route::get('/index', function () {
-        return view('admin.home');
-    });
+    Route::get('/', 'App\Http\Controllers\WebSiteController@index');
 
-    Route::get('/produtos', function () {
-        return view('admin.produtos');
-    });
+    Route::get('/index', 'App\Http\Controllers\WebSiteController@index');
 
-    Route::get('/pedidos', function () {
-        return view('admin.pedidos');
-    });
+    Route::get('/produtos', 'App\Http\Controllers\WebSiteController@produtos');
 
-    Route::get('/clientes', function () {
-        return view('admin.clientes');
-    });
+    Route::get('/pedidos', 'App\Http\Controllers\WebSiteController@pedidos');
 
-    Route::get('/configuracoes', function () {
-        return view('admin.configuracoes');
-    });
+    Route::get('/clientes', 'App\Http\Controllers\WebSiteController@clientes');
+
+    Route::get('/configuracoes', 'App\Http\Controllers\WebSiteController@configuracoes');
 });

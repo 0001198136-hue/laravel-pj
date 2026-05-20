@@ -28,45 +28,22 @@
           <a class="btn btn-light" href="catalogo.html">Explorar catalogo</a>
         </div>
 
+        
         <div class="grid-4">
-          <article class="card">
-            <img src="assets/img/product1.svg" alt="Tenis Urban" />
-            <div class="product-body">
-              <span class="tag">Moda urbana</span>
-              <h3>Tenis Urban</h3>
-              <div class="price" data-price="289.9"></div>
-              <div class="meta"><span>4.9 estrelas</span><span>12x sem juros</span></div>
-            </div>
-          </article>
-          <article class="card">
-            <img src="assets/img/product2.svg" alt="Mochila Pro" />
-            <div class="product-body">
-              <span class="tag">Acessorios</span>
-              <h3>Mochila Pro</h3>
-              <div class="price" data-price="229.9"></div>
-              <div class="meta"><span>Mais vendida</span><span>Entrega rapida</span></div>
-            </div>
-          </article>
-          <article class="card">
-            <img src="assets/img/product3.svg" alt="Relogio Edge" />
-            <div class="product-body">
-              <span class="tag">Lifestyle</span>
-              <h3>Relogio Edge</h3>
-              <div class="price" data-price="399.9"></div>
-              <div class="meta"><span>Edicao premium</span><span>Garantia 1 ano</span></div>
-            </div>
-          </article>
-          <article class="card">
-            <img src="assets/img/product4.svg" alt="Headphone Air" />
-            <div class="product-body">
-              <span class="tag">Tech</span>
-              <h3>Headphone Air</h3>
-              <div class="price" data-price="519.9"></div>
-              <div class="meta"><span>Noise canceling</span><span>Frete gratis</span></div>
-            </div>
-          </article>
+        @foreach($produtos as $produto)
+            <a href="produto?id={{ $produto['id'] }}">
+                <article class="card">
+                      <img src="assets/img/{{ $produto['imagem'] }}" alt="{{ $produto['nome'] }}" />
+                      <div class="product-body">
+                        <span class="tag">{{ $produto['categoria'] }}</span>
+                        <h3>{{ $produto['nome'] }}</h3>
+                        <div class="price" data-price="{{ $produto['preco'] }}"></div>
+                        <div class="meta"><span style="color: #ffd900;">{{ $produto['teste'] }}⭐</span><span>*Somente à vista*</span></div>
+                      </div>
+                    </article>
+            </a>
+        @endforeach
         </div>
-      </div>
     </section>
 
     <section class="section">

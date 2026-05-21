@@ -25,7 +25,7 @@
         <div class="summary" style="margin-top:22px;position:static">
           <div class="summary-row"><strong>Total estimado</strong><strong data-product-total></strong></div>
           <div class="summary-row"><span>Disponibilidade</span><span class="badge">Em estoque</span></div>
-          <div class="summary-row"><span>SKU</span><span>NS-URBAN-001</span></div>
+           <div class="summary-row"><span>SKU</span><span>NS-URBAN-001</span></div>
         </div>
       </div>
     </div>

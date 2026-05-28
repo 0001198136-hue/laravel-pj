@@ -17,14 +17,14 @@
 
       <div class="grid-4" style="margin-top:22px">
         @foreach($produtos as $produto)
-            <a href="produto?id={{ $produto['id'] }}">
+            <a href="produto?id={{ $produto->id }}">
                 <article class="card">
-                      <img src="assets/img/{{ $produto['imagem'] }}" alt="{{ $produto['nome'] }}" />
+                      <img src="assets/img/{{ $produto->imagem }}" alt="{{ $produto->nome }}" />
                       <div class="product-body">
-                        <span class="tag">{{ $produto['categoria'] }}</span>
-                        <h3>{{ $produto['nome'] }}</h3>
-                        <div class="price" data-price="{{ $produto['preco'] }}"></div>
-                        <div class="meta"><span style="color: #ffd900;">{{ $produto['teste'] }}⭐</span><span>*Somente à vista*</span></div>
+                        <span class="tag">{{ $produto->categoria }}</span>
+                        <h3>{{ $produto->nome }}</h3>
+                        <div class="price" data-price="{{ $produto->preco }}"></div>
+                        <div class="meta"><span style="color: #ffd900;">{{ $produto->test }}⭐</span><span>*Somente à vista*</span></div>
                       </div>
                     </article>
             </a>

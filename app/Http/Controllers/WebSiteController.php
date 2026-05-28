@@ -2,41 +2,32 @@
 namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class WebSiteController extends Controller
 {
-    public $produtos = [
-        ['id' => 1, 'nome' => 'desert eagle', 'preco' => 25000.00, 'imagem' => 'dg.png', 'categoria' => 'pistola', 'teste' => '5.0'],
-        ['id' => 2, 'nome' => 'glock g18 auto', 'preco' => 15000.00, 'imagem' => 'g18.png', 'categoria' => 'pistola' , 'teste' => '5.0'],
-        ['id' => 3, 'nome' => 'glock g19x', 'preco' => 9000.00, 'imagem' => 'glockg19x.png', 'categoria' => 'pistola', 'teste' => '5.0'],
-        ['id' => 4, 'nome' => 'fal', 'preco' => 200000.00, 'imagem' => 'fal.png', 'categoria' => 'fuzil', 'teste' => '10.0'],
-        ['id' => 5, 'nome' => 'Kalashnicov - 47', 'preco' => 150000.00, 'imagem' => 'ak.png', 'categoria' => 'fuzil', 'teste' => '10.0'],
-        ['id' => 6, 'nome' => 'Javelin Rocket Laucher', 'preco' => 887.419,00, 'imagem' => 'unnamed.jpg', 'categoria' => 'lancador', 'teste' => '10.0'],
-        ['id' => 7, 'nome' => 'venzuela' , 'preco' => 0.00, 'imagem' => 'Mito E.png', 'categoria' => 'pais', 'teste' => '-1.0'],
-        ];
-
+    
 
     public function home(){
 
-    $produtos = $this->produtos;
+
+    $produtos = DB::table('produtos')->get()->toArray();
         return view('home', compact('produtos'));
     }
 
     public function catalogo(){
-        $produtos = $this->produtos;
+        $produtos = DB::table('produtos')->get()->toArray();
         return view('catalogo', compact('produtos'));
     }
 
-    public function produto(Request $request){
-        $produtos = $this->produtos;
-        $id = $request->get('id');
-        $produto = array_filter($produtos, function($p) use ($id) {
-            return $p['id'] == $id;
-        });
-        $produto = reset($produto);
-
-        return view('produto', compact('produtos') + compact('produto'));
+    public function produto(Request $request)
+{
+    $id = $request->get('id');
+    $produto = DB::table('produtos')->where('id', $id)->first(); if (!$produto) {
+        abort(404, 'Produto não encontrado');
     }
+    return view('produto', compact('produto'));
+}
 
     public function carrinho(){
         return view('carrinho');

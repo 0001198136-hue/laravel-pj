@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\WebSiteController;
+use App\Http\Controllers\Admin\AdminProdutosController;
 
 Route::get('/', 'App\Http\Controllers\WebSiteController@home');
 
@@ -16,17 +18,19 @@ Route::get('/contato', 'App\Http\Controllers\WebSiteController@contato');
 
 Route::prefix('admin')->group(function () {
     
-    Route::get('/login', 'App\Http\Controllers\WebSiteController@login');
+    Route::get('/login', 'App\Http\Controllers\Admin\AdminProdutosController@login');
 
-    Route::get('/', 'App\Http\Controllers\WebSiteController@index');
+    Route::get('/', 'App\Http\Controllers\Admin\AdminProdutosController@index');
 
-    Route::get('/index', 'App\Http\Controllers\WebSiteController@index');
+    Route::get('/index', 'App\Http\Controllers\Admin\AdminProdutosController@index');
 
-    Route::get('/produtos', 'App\Http\Controllers\WebSiteController@produtos');
+    Route::get('/produtos', 'App\Http\Controllers\Admin\AdminProdutosController@produtos');
 
-    Route::get('/pedidos', 'App\Http\Controllers\WebSiteController@pedidos');
+    Route::post('/produtos/salvar', ['App\Http\Controllers\Admin\AdminProdutosController', 'store'])->name('produtos.store');
 
-    Route::get('/clientes', 'App\Http\Controllers\WebSiteController@clientes');
+    Route::get('/pedidos', 'App\Http\Controllers\Admin\AdminProdutosController@pedidos');
 
-    Route::get('/configuracoes', 'App\Http\Controllers\WebSiteController@configuracoes');
+    Route::get('/clientes', 'App\Http\Controllers\Admin\AdminProdutosController@clientes');
+
+    Route::get('/configuracoes', 'App\Http\Controllers\Admin\AdminProdutosController@configuracoes');
 });

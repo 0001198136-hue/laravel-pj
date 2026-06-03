@@ -91,4 +91,6 @@ class WebSiteController extends Controller
 
         return redirect()->back()->with('sucesso', 'Produto cadastrado com sucesso usando Model!');
     }
+    
 }
+

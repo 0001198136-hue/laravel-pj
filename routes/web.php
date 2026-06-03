@@ -17,20 +17,18 @@ Route::get('/checkout', 'App\Http\Controllers\WebSiteController@checkout');
 Route::get('/contato', 'App\Http\Controllers\WebSiteController@contato');
 
 Route::prefix('admin')->group(function () {
-    
-    Route::get('/login', 'App\Http\Controllers\Admin\AdminProdutosController@login');
 
-    Route::get('/', 'App\Http\Controllers\Admin\AdminProdutosController@index');
+    Route::get('/', [AdminProdutosController::class, 'index']);
+    Route::get('/index', [AdminProdutosController::class, 'index']);
+    Route::get('/produtos', [AdminProdutosController::class, 'produtos'])->name('produtos');
+    Route::get('/pedidos', [AdminProdutosController::class, 'pedidos']);
+    Route::get('/clientes', [AdminProdutosController::class, 'clientes']);
+    Route::get('/configuracoes', [AdminProdutosController::class, 'configuracoes']);
 
-    Route::get('/index', 'App\Http\Controllers\Admin\AdminProdutosController@index');
+    Route::get('/produtos/edit/{id}', [AdminProdutosController::class, 'edit'])->name('produtos.edit');
+    Route::post('/produtos/salvar', [AdminProdutosController::class, 'store'])->name('produtos.store');
 
-    Route::get('/produtos', 'App\Http\Controllers\Admin\AdminProdutosController@produtos');
+    Route::delete('/produtos/{id}', [AdminProdutosController::class, 'destroy'])->name('produtos.destroy');
+    Route::put('/produtos/{id}', [AdminProdutosController::class, 'update'])->name('produtos.update');
 
-    Route::post('/produtos/salvar', ['App\Http\Controllers\Admin\AdminProdutosController', 'store'])->name('produtos.store');
-
-    Route::get('/pedidos', 'App\Http\Controllers\Admin\AdminProdutosController@pedidos');
-
-    Route::get('/clientes', 'App\Http\Controllers\Admin\AdminProdutosController@clientes');
-
-    Route::get('/configuracoes', 'App\Http\Controllers\Admin\AdminProdutosController@configuracoes');
 });

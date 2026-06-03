@@ -10,7 +10,7 @@
 
       <div class="top">
         <div><h1>Gestao de produtos</h1><p class="small">Cadastre itens, altere preco e acompanhe estoque.</p></div>
-        <button class="btn btn-primary">Novo produto</button>
+        <a href="/admin/produtos"  class="btn btn-primary">Novo produto</a>
       </div>
 
       <section class="grid-main">
@@ -20,41 +20,50 @@
           <table class="table">
             <thead><tr><th>Produto</th><th>Categoria</th><th>Preco</th><th>Estoque</th></tr></thead>
             <tbody>
-            @foreach($produtos as $produto)
-              <tr>
-                <td>{{$produto->nome}}</td>
-                <td>{{$produto->categoria}}</td>
-                <td>R$ {{number_format($produto->preco, 2, ',', '.')}}</td>
-                <td>{{$produto->test ?? '♾️'}}</td>
-              </tr>
-              
-      @endforeach
+            @foreach($produtos as $p)
+                <tr>
+                  <td>{{$p->nome}}</td> 
+                  <td>{{$p->categoria}}</td>
+                  <td>R$ {{number_format($p->preco, 2, ',', '.')}}</td>
+                  <td>{{$p->test ?? '♾️'}}</td>
+                  <td>  
+                    <a href="{{ route('produtos.edit', $p->id) }}" class="btn btn-delete">Editar</a>
+                    <br>
+                    <form action="{{ route('produtos.destroy', $p->id) }}" method="POST"
+                          onsubmit="return confirm('Tem certeza?');" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-delete">Delete</button>
+                    </form>  
+                  </td>
+                </tr>
+              @endforeach
             </tbody>
           </table>
         </div>
 
         <div class="card">
           <h3>Cadastrar ou editar</h3>
-          <form id="meuFormulario" class="list" action="{{ route('produtos.store') }}" method="POST">
+          <form id="meuFormulario" class="list" action="{{ isset($produtoEdit) ? route('produtos.update', $produtoEdit->id) : route('produtos.store') }}" method="POST">
             @csrf
-            
-            <input type="text" name="nome" placeholder="Nome do produto" required />
+            @if(isset($produtoEdit))
+                @method('PUT')
+            @endif
+
+            <input value="{{ $produtoEdit->nome ?? '' }}" type="text" name="nome" placeholder="Nome do produto" required />
             
             <select name="categoria">
-              <option value="">Selecione a categoria</option>
-              @foreach($produtos as $produto)
-                <option value="{{$produto->categoria}}">{{$produto->categoria}}</option>
+              <option value="{{ $produtoEdit->categoria ?? '' }}">{{ $produtoEdit->categoria ?? 'Selecione a categoria' }}</option>
+              @foreach($produtos as $p)
+                <option value="{{$p->categoria}}">{{$p->categoria}}</option>
               @endforeach
-              <input type="text" name="categoria" placeholder="Categoria do produto" />
-              
             </select>
 
-            <input type="text" name="preco" placeholder="Preco" />
-            <input type="text" name="imagem" placeholder="Nome da imagem (ex: g18.png)" />
-            <input type="text" name="estoque" placeholder="Quantidade em estoque (deixe vazio para estoque infinito)" />
+            <input value="{{ $produtoEdit->preco ?? '' }}" type="text" name="preco" placeholder="Preco" />
+            <input value="{{ $produtoEdit->imagem ?? '' }}" type="text" name="imagem" placeholder="Nome da imagem (ex: g18.png)" />
+            <input value="{{ $produtoEdit->estoque ?? '' }}" type="text" name="estoque" placeholder="Quantidade em estoque" />
 
-
-            <button class="btn btn-primary" type="button" onclick="document.getElementById('meuFormulario').submit();">Salvar produto</button>
+            <button type="submit" class="btn btn-primary">Salvar produto</button> 
         </form>
         </div>
       </section>

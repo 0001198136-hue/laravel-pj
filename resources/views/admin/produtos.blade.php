@@ -7,12 +7,10 @@
             {{ session('sucesso') }}
         </div>
       @endif
-
       <div class="top">
         <div><h1>Gestao de produtos</h1><p class="small">Cadastre itens, altere preco e acompanhe estoque.</p></div>
-        <a href="/admin/produtos"  class="btn btn-primary">Novo produto</a>
+        <a href="/admin/produtos" class="btn btn-primary">Novo produto</a>
       </div>
-
       <section class="grid-main">
       
         <div class="card">
@@ -37,7 +35,7 @@
                     </form>  
                   </td>
                 </tr>
-              @endforeach
+            @endforeach
             </tbody>
           </table>
         </div>
@@ -51,21 +49,40 @@
             @endif
 
             <input value="{{ $produtoEdit->nome ?? '' }}" type="text" name="nome" placeholder="Nome do produto" required />
-            
-            <select name="categoria">
-              <option value="{{ $produtoEdit->categoria ?? '' }}">{{ $produtoEdit->categoria ?? 'Selecione a categoria' }}</option>
-              @foreach($produtos as $p)
-                <option value="{{$p->categoria}}">{{$p->categoria}}</option>
+
+            <select name="categoria" id="selectCategoria" onchange="toggleNovaCategoria(this)">
+              <option value="">Selecione a categoria</option>
+              @foreach($categorias as $cat)
+                <option value="{{ $cat }}" {{ isset($produtoEdit) && $produtoEdit->categoria === $cat ? 'selected' : '' }}>
+                  {{ $cat }}
+                </option>
+              @endforeach
+              <option value="__nova__">+ Nova categoria...</option>
+            </select>
+            <input type="text" id="novaCategoria" name="categoria_nova"
+                   placeholder="Digite a nova categoria" style="display:none; margin-top:6px;" />
+
+            <select name="nomeimagem" id="selectImagem" onchange="atualizarPreview(this.value)">
+              <option value="">Selecione a imagem</option>
+              @foreach($imagens as $img)
+                <option value="{{ $img }}" {{ isset($produtoEdit) && $produtoEdit->imagem === $img ? 'selected' : '' }}>
+                  {{ $img }}
+                </option>
               @endforeach
             </select>
+             <img id="previewImagem"
+                src=""
+                data-imagem="{{ isset($produtoEdit) && $produtoEdit->imagem ? $produtoEdit->imagem : '' }}"
+                style="width:140px; margin-top:8px; border-radius:6px; display:none;">
 
-            <input value="{{ $produtoEdit->preco ?? '' }}" type="text" name="preco" placeholder="Preco" />
-            <input value="{{ $produtoEdit->imagem ?? '' }}" type="text" name="imagem" placeholder="Nome da imagem (ex: g18.png)" />
             <input value="{{ $produtoEdit->estoque ?? '' }}" type="text" name="estoque" placeholder="Quantidade em estoque" />
-
+            
             <button type="submit" class="btn btn-primary">Salvar produto</button> 
-        </form>
+          </form>
         </div>
+
       </section>
-      </main>
+    </main>
+    <script src="{{ asset('assets_admin/js/seu-arquivo.js') }}"></script>
+
 @endsection

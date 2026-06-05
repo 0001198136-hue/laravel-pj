@@ -45,19 +45,39 @@ public function login()
         return view('admin.perfil');
     }
 
-    public function store(Request $request)
-    {
-        Produto::create([
-            'nome'      => $request->input('nome'),
-            'categoria' => $request->input('categoria'),
-            'preco'     => $request->input('preco'),
-            'imagem'    => $request->input('imagem') ?? 'g18.png',
-            'test'      => 1.0,
-            'estoque'   => 999
-        ]);
+    // store - também corrige o estoque que tá hardcoded
+public function store(Request $request)
+{
+    Produto::create([
+        'nome'      => $request->input('nome'),
+        'categoria' => $request->input('categoria'),
+        'preco'     => $request->input('preco'),
+        'imagem'    => $request->input('imagem') ?? 'g18.png',
+        'test'      => 1.0,
+        'estoque'   => $request->input('estoque') ?? 0
+    ]);
+    return redirect()->to('/admin/produtos')->with('sucesso', 'Produto cadastrado!');
+}
 
-        return redirect()->back()->with('sucesso', 'Produto cadastrado com sucesso usando Model!');
+// update - corrige o redirect
+public function update(Request $request, $id)
+{
+    $produto = Produto::find($id);
+
+    if (!$produto) {
+        return redirect()->back()->with('erro', 'Produto não encontrado!');
     }
+
+    $produto->update([
+        'nome'      => $request->input('nome'),
+        'categoria' => $request->input('categoria'),
+        'preco'     => $request->input('preco'),
+        'imagem'    => $request->input('imagem') ?? $produto->imagem,
+        'estoque'   => $request->input('estoque') ?? $produto->estoque,
+    ]);
+
+    return redirect()->to('/admin/produtos')->with('sucesso', 'Produto atualizado!'); // <- já tava certo o nome
+}
 
     public function destroy(Request $request, $id)
         {
@@ -83,24 +103,7 @@ public function login()
             return view('admin.produtos', compact('produtos', 'produtoEdit'));
         }
 
-    public function update(Request $request, $id)
-{
-    $produto = Produto::find($id);
-    
-    if (!$produto) {
-        return redirect()->back()->with('erro', 'Produto não encontrado!');
-    }
-
-    $produto->update([
-        'nome'      => $request->input('nome'),
-        'categoria' => $request->input('categoria'),
-        'preco'     => $request->input('preco'),
-        'imagem'    => $request->input('imagem') ?? $produto->imagem,
-        'estoque'   => $request->input('estoque') ?? $produto->estoque,
-    ]);
-
-    return redirect()->route('produtos')->with('sucesso', 'Produto atualizado!');
-}
+   
 }
 
 

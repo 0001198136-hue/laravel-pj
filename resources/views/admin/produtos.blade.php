@@ -25,7 +25,7 @@
                   <td>{{$p->nome}}</td> 
                   <td>{{$p->categoria}}</td>
                   <td>R$ {{number_format($p->preco, 2, ',', '.')}}</td>
-                  <td>{{$p->test ?? '♾️'}}</td>
+                  <td>{{$p->estoque ?? '♾️'}}</td>
                   <td>  
                     <a href="{{ route('produtos.edit', $p->id) }}" class="btn btn-delete">Editar</a>
                     <br>
